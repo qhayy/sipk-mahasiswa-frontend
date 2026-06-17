@@ -29,7 +29,7 @@ function ResetPassword() {
       setLoading(true);
 
       const response = await axios.post(
-        "http://localhost:5000/reset-password",
+        "https://sipk-mahasiswa-backend-production.up.railway.app/reset-password",
         {
           email: email,
           password_baru: passwordBaru,

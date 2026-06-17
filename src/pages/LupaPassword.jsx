@@ -12,7 +12,7 @@ function LupaPassword() {
 
     try {
       await axios.post(
-        "http://localhost:5000/forgot-password",
+        "https://sipk-mahasiswa-backend-production.up.railway.app/forgot-password",
         {
           email: email,
         }

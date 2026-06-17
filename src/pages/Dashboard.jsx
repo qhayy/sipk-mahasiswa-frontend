@@ -55,7 +55,7 @@ function Dashboard() {
 
   const getKegiatan = async () => {
     try {
-      const response = await axios.get("http://localhost:5000/kegiatan");
+      const response = await axios.get( "https://sipk-mahasiswa-backend-production.up.railway.app/kegiatan");
       setKegiatan(response.data);
     } catch (error) {
       console.error("Gagal mengambil data kegiatan:", error);

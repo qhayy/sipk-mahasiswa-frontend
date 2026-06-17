@@ -1,6 +1,6 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
+import axiosInstance from "../api/axiosInstance";
 
 function Login() {
   const navigate = useNavigate();
@@ -21,10 +21,10 @@ function Login() {
     e.preventDefault();
 
     try {
-      const response = await axios.post(
-        "http://localhost:5000/login",
-        formData
-      );
+      const response = await axiosInstance.post(
+  "/login",
+  formData
+);
 
       const user = response.data.data;
 
