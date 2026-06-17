@@ -1,0 +1,166 @@
+/* stylelint-disable at-rule-no-unknown */
+@tailwind components;
+@tailwind utilities;
+
+/* ROOT ADMIN */
+.admin-page {
+  min-height: 100vh;
+  background: #fffaf5;
+  color: #1e293b;
+  font-family: "Plus Jakarta Sans", sans-serif;
+  padding: 30px;
+}
+
+/* CARD */
+.admin-page .card,
+.admin-page .bg-white {
+  background: #ffffff;
+  border: 1px solid #fed7aa;
+  border-radius: 24px;
+  box-shadow: 0 10px 30px rgba(249, 115, 22, 0.08);
+}
+
+/* TITLE */
+.admin-page h1,
+.admin-page h2,
+.admin-page h3 {
+  color: #0f172a;
+  font-weight: 800;
+}
+
+/* BUTTON GLOBAL */
+.admin-page button {
+  border-radius: 999px;
+  transition: all 0.3s ease;
+}
+
+/* CONTENT SHIFT */
+.admin-content {
+  transition: padding-left 0.3s ease;
+}
+
+.admin-content.collapsed {
+  padding-left: 120px;
+}
+
+.admin-content.expanded {
+  padding-left: 310px;
+}
+
+/* SIDEBAR */
+aside {
+  background: #fff7ed !important;
+  border-right: 1px solid #fed7aa !important;
+}
+
+/* LOGO BOX */
+aside .shadow-lg {
+  background: linear-gradient(135deg, #f97316, #fb923c) !important;
+}
+
+/* SIDEBAR TEXT */
+aside h1,
+aside h2,
+aside p,
+aside span,
+aside a {
+  color: #1e293b !important;
+}
+
+/* MENU */
+aside a {
+  border-radius: 16px !important;
+  padding: 14px 18px !important;
+  transition: all 0.25s ease !important;
+  font-weight: 600;
+  text-decoration: none !important;
+}
+
+aside a span,
+aside a p {
+  text-decoration: none !important;
+}
+
+/* HOVER MENU */
+aside a:hover {
+  background: #ffedd5 !important;
+  color: #ea580c !important;
+  text-decoration: none !important;
+}
+
+/* ACTIVE MENU - DIUBAH TOTAL DARI UNGU MENJADI ORANGE SUNSET PREMIUM */
+aside .active,
+aside a.active {
+  background: linear-gradient(135deg, #f97316, #fb923c) !important; /* Warna Orange hangat, senada logo */
+  color: white !important;
+  text-decoration: none !important;
+  box-shadow: 0 8px 20px rgba(249, 115, 22, 0.2) !important; /* Bayangan orange lembut */
+}
+
+/* ICON ACTIVE - MEMBUAT IKON MENU YANG AKTIF MENJADI PUTIH */
+aside .active svg,
+aside a.active svg,
+aside .active i,
+aside a.active i,
+aside .active span {
+  color: white !important;
+}
+
+/* ICON DEFAULT */
+aside svg {
+  color: #64748b !important;
+}
+
+/* TOGGLE BUTTON SIDEBAR */
+aside button,
+aside button *,
+aside button:focus,
+aside button:active,
+aside button:focus-visible {
+  background: #f97316 !important;
+  color: white !important;
+  border-radius: 999px !important;
+  font-weight: 700 !important;
+  border: none !important;
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-shadow: none !important;
+}
+
+aside button:hover {
+  background: #ea580c !important;
+}
+
+/* GLOBAL RESET UNTUK MENCEGAH FLICKER UNGU PADA TOMBOL AKTOR LAINNYA */
+.admin-page button:focus,
+.admin-page button:active,
+.admin-page button:focus-visible {
+  outline: none !important;
+  box-shadow: none !important;
+  --tw-ring-color: transparent !important;
+}
+
+/* TABLE */
+table th {
+  color: #64748b;
+  font-size: 13px;
+  font-weight: 700;
+}
+
+table td {
+  color: #1e293b;
+}
+
+/* BADGE */
+.badge {
+  border-radius: 999px;
+  padding: 6px 12px;
+  font-weight: 600;
+}
+
+/* CHART CONTAINER */
+.recharts-wrapper {
+  font-family: "Plus Jakarta Sans", sans-serif;
+}
