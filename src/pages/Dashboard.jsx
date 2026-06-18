@@ -273,10 +273,11 @@ function Dashboard() {
       return;
     }
 
-    const response = await axiosInstance.put("/change-password", {
-      oldPassword: passwordData.oldPassword,
-      newPassword: passwordData.newPassword,
-    });
+   const response = await axiosInstance.put("/change-password", {
+  password_lama: passwordData.oldPassword,
+  password_baru: passwordData.newPassword,
+  konfirmasi_password: passwordData.confirmPassword,
+});
 
     alert(response.data.message || "Password berhasil diubah");
 
@@ -753,35 +754,35 @@ function Dashboard() {
 
                   <p>Password Lama</p>
                  <input
-  type="password"
-  value={passwordData.oldPassword}
-  onChange={(e) =>
-    setPasswordData({
-      ...passwordData,
-      oldPassword: e.target.value,
-    })
+                type="password"
+                value={passwordData.oldPassword}
+                onChange={(e) =>
+                setPasswordData({
+                ...passwordData,
+                oldPassword: e.target.value,
+           })
   }
 />
-
-<input
-  type="password"
-  value={passwordData.newPassword}
-  onChange={(e) =>
-    setPasswordData({
-      ...passwordData,
-      newPassword: e.target.value,
-    })
+                <p>Password Baru</p>
+              <input
+            type="password"
+            value={passwordData.newPassword}
+           onChange={(e) =>
+          setPasswordData({
+          ...passwordData,
+          newPassword: e.target.value,
+        })
   }
 />
-
-<input
-  type="password"
-  value={passwordData.confirmPassword}
-  onChange={(e) =>
-    setPasswordData({
-      ...passwordData,
-      confirmPassword: e.target.value,
-    })
+            <p>Konfirmasi Password Baru</p>
+          <input
+          type="password"
+          value={passwordData.confirmPassword}
+          onChange={(e) =>
+         setPasswordData({
+        ...passwordData,
+        confirmPassword: e.target.value,
+      })
   }
 />
                   <button
