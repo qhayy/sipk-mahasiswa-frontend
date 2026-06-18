@@ -267,6 +267,8 @@ function Dashboard() {
   };
 
   const handleChangePassword = async () => {
+     console.log("TOMBOL DIKLIK");
+  console.log("TOKEN:", localStorage.getItem("token"));
   try {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
       alert("Konfirmasi password tidak cocok");
