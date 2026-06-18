@@ -902,15 +902,17 @@ function Dashboard() {
           </div>
         )}
       </section>
-
-      <button
-        type="button"
-        className="floating-btn"
-        onClick={() => setShowPengajuan(true)}
-        title="Ajukan Kegiatan Baru"
-      >
-        +
-      </button>
+        
+      {menuAktif === "kegiatan" && (
+       <button
+       type="button"
+      className="floating-btn"
+      onClick={() => setShowPengajuan(true)}
+      title="Ajukan Kegiatan Baru"
+  >
+    +
+  </button>
+)}
     </div>
   );
 }
