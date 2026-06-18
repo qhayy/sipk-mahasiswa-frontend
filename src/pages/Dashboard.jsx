@@ -40,6 +40,12 @@ function Dashboard() {
     no_whatsapp: "",
   });
 
+  const [passwordData, setPasswordData] = useState({
+  oldPassword: "",
+  newPassword: "",
+  confirmPassword: "",
+});
+
   useEffect(() => {
     const token = localStorage.getItem("token");
 
@@ -259,6 +265,34 @@ function Dashboard() {
       alert(error.response?.data?.message || "Gagal memperbarui profil");
     }
   };
+
+  const handleChangePassword = async () => {
+  try {
+    if (passwordData.newPassword !== passwordData.confirmPassword) {
+      alert("Konfirmasi password tidak cocok");
+      return;
+    }
+
+    const response = await axiosInstance.put("/change-password", {
+      oldPassword: passwordData.oldPassword,
+      newPassword: passwordData.newPassword,
+    });
+
+    alert(response.data.message || "Password berhasil diubah");
+
+    setPasswordData({
+      oldPassword: "",
+      newPassword: "",
+      confirmPassword: "",
+    });
+
+  } catch (error) {
+    alert(
+      error.response?.data?.message ||
+      "Gagal mengubah password"
+    );
+  }
+};
 
   const handlePengajuanChange = (e) => {
     setPengajuanData({
@@ -718,15 +752,44 @@ function Dashboard() {
                   <h3>Ganti Password Akun</h3>
 
                   <p>Password Lama</p>
-                  <input type="password" placeholder="Masukkan password lama" />
+                 <input
+  type="password"
+  value={passwordData.oldPassword}
+  onChange={(e) =>
+    setPasswordData({
+      ...passwordData,
+      oldPassword: e.target.value,
+    })
+  }
+/>
 
-                  <p>Password Baru</p>
-                  <input type="password" placeholder="Masukkan password baru" />
+<input
+  type="password"
+  value={passwordData.newPassword}
+  onChange={(e) =>
+    setPasswordData({
+      ...passwordData,
+      newPassword: e.target.value,
+    })
+  }
+/>
 
-                  <p>Konfirmasi Password Baru</p>
-                  <input type="password" placeholder="Ulangi password baru" />
-
-                  <button className="card-btn">Ubah Password</button>
+<input
+  type="password"
+  value={passwordData.confirmPassword}
+  onChange={(e) =>
+    setPasswordData({
+      ...passwordData,
+      confirmPassword: e.target.value,
+    })
+  }
+/>
+                  <button
+  className="card-btn"
+  onClick={handleChangePassword}
+>
+  Ubah Password
+</button>
                 </div>
               </div>
             )}
