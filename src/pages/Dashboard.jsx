@@ -343,6 +343,13 @@ function Dashboard() {
           <button type="button" onClick={kembaliKeDashboard}>
             Dashboard
           </button>
+          
+           <button
+           type="button"
+           onClick={()  => navigate ("/pengajuan-saya")}
+           >
+            Pengajuan Kegiatan
+           </button>
 
           <div className={`nav-dropdown ${dropdownKegiatan ? "open" : ""}`}>
             <button

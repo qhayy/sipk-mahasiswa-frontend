@@ -17,6 +17,7 @@ import AdminVerifikasiPeserta from "./admin/pages/VerifikasiPeserta";
 import AdminLaporan from "./admin/pages/Laporan";
 import "./admin/admin.css";
 import Sidebar from "./admin/components/Sidebar";
+import PengajuanSaya from "./pages/PengajuanSaya";
 
 import "./App.css";
 
@@ -62,6 +63,8 @@ function App() {
         <Route path="/admin/verifikasi-kegiatan" element={<AdminLayout><AdminVerifikasiKegiatan /></AdminLayout>} />
         <Route path="/admin/verifikasi-peserta" element={<AdminLayout><AdminVerifikasiPeserta /></AdminLayout>} />
         <Route path="/admin/laporan" element={<AdminLayout><AdminLaporan /></AdminLayout>} />
+        <Route path="/pengajuan-saya" element={<PengajuanSaya />}
+/>
       </Routes>
     </BrowserRouter>
   );
