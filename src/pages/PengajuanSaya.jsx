@@ -12,11 +12,26 @@ function PengajuanSaya() {
 
   const getPengajuanSaya = async () => {
     try {
-      const response = await axiosInstance.get("/pengajuan-saya");
+      const response = await axiosInstance.get("/admin/kegiatan");
 
-      setPengajuan(response.data);
+      const semuaKegiatan = response.data?.data || [];
+
+      const user = JSON.parse(
+        localStorage.getItem("user")
+      );
+
+      const dataSaya = semuaKegiatan.filter(
+        (item) =>
+          String(item.nim_pengaju) ===
+          String(user?.nim)
+      );
+
+      setPengajuan(dataSaya);
     } catch (error) {
-      console.error("Gagal mengambil data pengajuan:", error);
+      console.error(
+        "Gagal mengambil data pengajuan:",
+        error
+      );
     } finally {
       setLoading(false);
     }
@@ -30,7 +45,7 @@ function PengajuanSaya() {
             style={{
               background: "#dcfce7",
               color: "#166534",
-              padding: "4px 10px",
+              padding: "6px 12px",
               borderRadius: "8px",
               fontSize: "12px",
               fontWeight: "600",
@@ -46,7 +61,7 @@ function PengajuanSaya() {
             style={{
               background: "#fee2e2",
               color: "#991b1b",
-              padding: "4px 10px",
+              padding: "6px 12px",
               borderRadius: "8px",
               fontSize: "12px",
               fontWeight: "600",
@@ -62,7 +77,7 @@ function PengajuanSaya() {
             style={{
               background: "#fef3c7",
               color: "#92400e",
-              padding: "4px 10px",
+              padding: "6px 12px",
               borderRadius: "8px",
               fontSize: "12px",
               fontWeight: "600",
@@ -77,13 +92,14 @@ function PengajuanSaya() {
   const formatTanggal = (tanggal) => {
     if (!tanggal) return "-";
 
-    const date = new Date(tanggal);
-
-    return date.toLocaleDateString("id-ID", {
-      day: "numeric",
-      month: "long",
-      year: "numeric",
-    });
+    return new Date(tanggal).toLocaleDateString(
+      "id-ID",
+      {
+        day: "numeric",
+        month: "long",
+        year: "numeric",
+      }
+    );
   };
 
   return (
@@ -99,10 +115,13 @@ function PengajuanSaya() {
       </nav>
 
       <section className="dashboard">
-        <h1 className="dashboard-title">Pengajuan Saya</h1>
+        <h1 className="dashboard-title">
+          Pengajuan Saya
+        </h1>
 
         <p className="dashboard-subtitle">
-          Daftar kegiatan yang pernah Anda ajukan sebagai panitia kegiatan.
+          Daftar kegiatan yang pernah Anda
+          ajukan sebagai panitia kegiatan.
         </p>
 
         {loading ? (
@@ -110,12 +129,18 @@ function PengajuanSaya() {
         ) : pengajuan.length === 0 ? (
           <div className="kegiatan-card">
             <h3>Belum Ada Pengajuan</h3>
-            <p>Anda belum pernah mengajukan kegiatan.</p>
+            <p>
+              Anda belum pernah mengajukan
+              kegiatan.
+            </p>
           </div>
         ) : (
           <div className="kegiatan-grid">
             {pengajuan.map((item) => (
-              <div key={item.id} className="kegiatan-card">
+              <div
+                key={item.id}
+                className="kegiatan-card"
+              >
                 <span className="card-badge">
                   {item.kategori}
                 </span>
@@ -144,10 +169,12 @@ function PengajuanSaya() {
 
                 <div
                   style={{
-                    marginTop: "10px",
+                    marginTop: "12px",
                   }}
                 >
-                  {getStatusBadge(item.status)}
+                  {getStatusBadge(
+                    item.status
+                  )}
                 </div>
               </div>
             ))}
