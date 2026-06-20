@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
+import Swal from "sweetalert2";
 
 function Login() {
   const navigate = useNavigate();
@@ -22,16 +23,16 @@ function Login() {
 
     try {
       const response = await axiosInstance.post(
-  "/login",
-  formData
-);
+        "/login",
+        formData
+      );
 
       const user = response.data.data;
 
       localStorage.setItem("token", response.data.token);
       localStorage.setItem("user", JSON.stringify(user));
 
-      alert(response.data.message || "Login berhasil!");
+      // Langsung masuk tanpa popup
 
       if (user?.role === "admin") {
         navigate("/admin/dashboard");
@@ -41,7 +42,15 @@ function Login() {
       navigate("/dashboard");
     } catch (error) {
       console.error("Error:", error);
-      alert(error.response?.data?.message || "Terjadi kesalahan saat login");
+
+      Swal.fire({
+        icon: "error",
+        title: "Login Gagal",
+        text:
+          error.response?.data?.message ||
+          "Terjadi kesalahan saat login",
+        confirmButtonColor: "#ef4444",
+      });
     }
   };
 
@@ -67,13 +76,16 @@ function Login() {
             <h1>Selamat Datang 👋</h1>
             <p>
               Masuk ke Sistem Informasi Pendaftaran Kegiatan Mahasiswa untuk
-              melihat informasi kegiatan dan melakukan pendaftaran secara online.
+              melihat informasi kegiatan dan melakukan pendaftaran secara
+              online.
             </p>
           </div>
 
           <div className="login-card">
             <h2>Masuk ke Akun</h2>
-            <p className="login-subtitle">Silakan login untuk melanjutkan</p>
+            <p className="login-subtitle">
+              Silakan login untuk melanjutkan
+            </p>
 
             <form onSubmit={handleLogin}>
               <div className="form-group">
@@ -101,7 +113,9 @@ function Login() {
               </div>
 
               <div className="forgot-password">
-                <Link to="/forgot-password">Lupa password?</Link>
+                <Link to="/forgot-password">
+                  Lupa password?
+                </Link>
               </div>
 
               <button type="submit" className="login-btn">
