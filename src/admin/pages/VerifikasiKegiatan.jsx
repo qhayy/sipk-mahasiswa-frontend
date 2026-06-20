@@ -37,26 +37,34 @@ const VerifikasiKegiatan = () => {
     }
   };
 
-  const handleVerifikasi = async (id, status) => {
-    const confirmMessage = status === 'disetujui' 
-      ? 'Setujui kegiatan ini?' 
-      : 'Tolak kegiatan ini? Berikan alasan penolakan.';
-    
-    let reason = '';
-    if (status === 'ditolak') {
-      reason = prompt('Berikan alasan penolakan:');
-      if (!reason) return;
-    }
-    
-    if (window.confirm(confirmMessage)) {
-      try {
-        await kegiatanService.verify(id, status, reason);
-        fetchKegiatan();
-      } catch (error) {
-        alert('Gagal memverifikasi kegiatan');
+ const handleVerifikasi = async (id, status) => {
+  try {
+    let reason = "";
+
+    if (status === "ditolak") {
+      reason = prompt("Berikan alasan penolakan:");
+
+      if (!reason || reason.trim() === "") {
+        alert("Alasan penolakan wajib diisi");
+        return;
       }
     }
-  };
+
+    await kegiatanService.verify(
+      id,
+      status,
+      reason
+    );
+
+    alert(`Kegiatan berhasil ${status}`);
+
+    loadKegiatan();
+
+  } catch (error) {
+    console.error(error);
+    alert("Gagal memverifikasi kegiatan");
+  }
+};
 
   const pendingKegiatan = kegiatan.filter(k => k.status === 'pending');
 
