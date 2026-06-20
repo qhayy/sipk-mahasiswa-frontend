@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import axiosInstance from "../api/axiosInstance";
+import Swal from "sweetalert2";
 
 function Registrasi() {
   const navigate = useNavigate();
@@ -24,6 +25,38 @@ function Registrasi() {
   const handleRegister = async (e) => {
     e.preventDefault();
 
+   if (formData.no_whatsapp.length < 10) {
+    Swal.fire({
+      icon: "warning",
+      title: "Nomor WhatsApp Tidak Valid",
+      text: "Nomor WhatsApp minimal 10 digit",
+      confirmButtonColor: "#f97316",
+
+    });
+    return;
+   } 
+
+   if (formData.password.length < 8) {
+    Swal.fire({
+      icon: "warning",
+      title: "Password Tidak Valid",
+      text: "Password minimal 8 karakter",
+      confirmButtonColor: "#f97316",
+    })
+    return;
+   }
+
+   if (formData.nim.length <8) {
+    Swal.fire ({
+      icon: "warning",
+      title: "NIM Tidak Valid",
+      text: "NIM minimal 8 digit",
+      confirmButtonText: "OK",
+      confirmButtonColor: "#f97316",
+    });
+    return;
+   }
+
     try {
       const dataKirim = {
         name: formData.nama,
@@ -39,14 +72,28 @@ function Registrasi() {
   dataKirim
 );
 
-      alert(response.data.message || "Registrasi berhasil! Silakan login.");
-      navigate("/login");
-    } catch (error) {
-      console.error("Error:", error);
-      alert(
-        error.response?.data?.message || "Terjadi kesalahan saat registrasi"
-      );
-    }
+     Swal.fire({
+  icon: "success",
+  title: "Registrasi Berhasil",
+  text: "Silakan login menggunakan akun Anda",
+  confirmButtonColor: "#f97316",
+}).then(() => {
+  navigate("/login");
+});
+
+} catch (error) {
+  console.error("Error:", error);
+
+  Swal.fire({
+    icon: "error",
+    title: "Registrasi Gagal",
+    text:
+      error.response?.data?.message ||
+      "Terjadi kesalahan saat registrasi",
+    confirmButtonColor: "#ef4444",
+  });
+}
+
   };
 
   return (
@@ -94,13 +141,19 @@ function Registrasi() {
 
               <div className="form-group">
                 <label>NIM</label>
-                <input
-                  type="text"
-                  name="nim"
-                  placeholder="Masukkan NIM"
-                  value={formData.nim}
-                  onChange={handleChange}
-                  required
+               <input
+                type="text"
+                name="nim"
+                maxLength={15}
+                placeholder="Masukkan NIM"
+                value={formData.nim}
+                onChange={(e) =>
+                setFormData({
+                 ...formData,
+               nim: e.target.value.replace(/\D/g, ""),
+              })
+             }
+               required
                 />
               </div>
 
@@ -123,7 +176,13 @@ function Registrasi() {
                   name="no_whatsapp"
                   placeholder="Masukkan nomor WhatsApp"
                   value={formData.no_whatsapp}
-                  onChange={handleChange}
+                  maxLength={13}
+                   onChange={(e) =>
+                    setFormData({
+                      ...formData,
+                       no_whatsapp: e.target.value.replace(/\D/g, ""),
+                     })
+  }   
                   required
                 />
               </div>
@@ -145,9 +204,10 @@ function Registrasi() {
                 <input
                   type="password"
                   name="password"
-                  placeholder="Masukkan password"
+                  placeholder="Minimal 8 karakter"
                   value={formData.password}
                   onChange={handleChange}
+                  minLength={8}
                   required
                 />
               </div>
