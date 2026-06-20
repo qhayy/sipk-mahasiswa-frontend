@@ -167,6 +167,11 @@ function PengajuanSaya() {
                   {item.pengaju}
                 </p>
 
+                <p>
+                  <strong>Alasan:</strong>
+                  {item.alasan_penolakan}
+                </p>
+
                 <div
                   style={{
                     marginTop: "12px",
