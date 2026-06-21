@@ -83,14 +83,12 @@ export const kegiatanService = {
     return await api.delete(`/admin/kegiatan/${id}`);
   },
 
-  verify: async (id, status, alasan_penolakan = "") => {
-    return await api.put(
-      `/admin/kegiatan/${id}/verifikasi`,
-      { status, 
-        alasan_penolakan,
-      }
-    );
-  },
+  verify: async (id, status) => {
+  return await api.put(
+    `/admin/kegiatan/${id}/verifikasi`,
+    { status }
+  );
+},
   
 };
 

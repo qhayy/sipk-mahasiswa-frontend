@@ -37,28 +37,13 @@ const VerifikasiKegiatan = () => {
     }
   };
 
- const handleVerifikasi = async (id, status) => {
+const handleVerifikasi = async (id, status) => {
   try {
-    let reason = "";
-
-    if (status === "ditolak") {
-      reason = prompt("Berikan alasan penolakan:");
-
-      if (!reason || reason.trim() === "") {
-        alert("Alasan penolakan wajib diisi");
-        return;
-      }
-    }
-
-    await kegiatanService.verify(
-      id,
-      status,
-      reason
-    );
+    await kegiatanService.verify(id, status);
 
     alert(`Kegiatan berhasil ${status}`);
 
-    fetchKegiatan();
+    loadKegiatan();
 
   } catch (error) {
     console.error(error);
