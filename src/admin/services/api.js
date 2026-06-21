@@ -69,12 +69,12 @@ export const kegiatanService = {
     return await api.get(`/kegiatan/${id}`);
   },
 
-  // DIPERBAIKI: Ditambahkan /admin agar tidak Error 404 saat Tambah Kegiatan
+  
   create: async (data) => {
     return await api.post("/admin/kegiatan", data);
   },
 
-  // DIPERBAIKI: Ditambahkan /admin agar tidak Error 404 saat Edit/Simpan Kegiatan
+  
   update: async (id, data) => {
     return await api.put(`/admin/kegiatan/${id}`, data);
   },

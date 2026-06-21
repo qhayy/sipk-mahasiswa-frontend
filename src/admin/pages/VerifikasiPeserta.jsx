@@ -43,22 +43,34 @@ const VerifikasiPeserta = () => {
     }
   };
 
-  const handleVerifikasi = async (id, status) => {
-    let reason = '';
-    if (status === 'ditolak') {
-      reason = prompt('Berikan alasan penolakan pendaftaran:');
-      if (!reason) return;
+ const handleVerifikasi = async (id, status) => {
+  if (
+    window.confirm(
+      `Yakin ingin ${
+        status === "disetujui"
+          ? "menyetujui"
+          : "menolak"
+      } pendaftaran ini?`
+    )
+  ) {
+    try {
+      await pesertaService.verify(id, status);
+
+      alert(
+        `Peserta berhasil ${
+          status === "disetujui"
+            ? "disetujui"
+            : "ditolak"
+        }`
+      );
+
+      fetchData();
+    } catch (error) {
+      console.error(error);
+      alert("Gagal memverifikasi peserta");
     }
-    
-    if (window.confirm(`Yakin ingin ${status === 'disetujui' ? 'menyetujui' : 'menolak'} pendaftaran ini?`)) {
-      try {
-        await pesertaService.verify(id, status, reason);
-        fetchData();
-      } catch (error) {
-        alert('Gagal memverifikasi peserta');
-      }
-    }
-  };
+  }
+};
 
   const pendingPeserta = peserta.filter(p => p.status === 'pending');
 
