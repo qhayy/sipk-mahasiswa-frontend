@@ -193,6 +193,10 @@ function Dashboard() {
       return "Diterima";
     }
 
+    if (status === "ditolak" || status === "Ditolak") {
+      return "Ditolak";
+    }
+
     return status;
   };
 
@@ -444,6 +448,14 @@ function Dashboard() {
               </button>
 
               <button
+              type="button"
+              className={filterPendaftaran === "Ditolak" ? "active" : ""}
+              onClick={() => pilihPendaftaran("Ditolak")}
+              >
+                Ditolak
+              </button>
+
+              <button
                 type="button"
                 className={
                   filterPendaftaran === "Riwayat Pendaftaran" ? "active" : ""
@@ -554,6 +566,18 @@ function Dashboard() {
             </h3>
             <p>Sedang Diproses</p>
           </div>
+
+          <div className= "dash-card">
+            <div className="dash-icon">❌</div>
+            <h3>
+              {
+                pendaftaran.filter(
+                  (item) => ubahStatus(item.status) === "Ditolak"
+                ).length
+              }
+            </h3>
+            <p>Ditolak</p>
+          </div>
         </div>
 
         {halamanAktif === "kegiatan" && (
@@ -648,6 +672,8 @@ function Dashboard() {
                             className={
                               ubahStatus(item.status) === "Diterima"
                                 ? "status success"
+                                : ubahStatus(item.status) === "Ditolak"
+                                ? "status danger"
                                 : "status pending"
                             }
                           >
@@ -833,6 +859,8 @@ function Dashboard() {
                           className={
                             ubahStatus(item.status) === "Diterima"
                               ? "status success"
+                              :ubahStatus(item.status) === "Ditolak"
+                              ? "status danger"
                               : "status pending"
                           }
                         >
