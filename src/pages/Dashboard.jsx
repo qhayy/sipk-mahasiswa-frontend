@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import axios from "axios";
 import axiosInstance from "../api/axiosInstance";
+import Swal from "sweetalert2";
 
 function Dashboard() {
   const navigate = useNavigate();
@@ -258,7 +259,12 @@ function Dashboard() {
     try {
       const response = await axiosInstance.put("/profile", editProfile);
 
-      alert(response.data.message || "Profil berhasil diperbarui");
+      Swal.fire({
+  icon: "success",
+  title: "Berhasil",
+  text: response.data.message || "Profil berhasil diperbarui",
+  confirmButtonColor: "#22c55e",
+});
 
       setProfile(response.data.data);
       localStorage.setItem("user", JSON.stringify(response.data.data));
@@ -266,7 +272,14 @@ function Dashboard() {
       setMenuProfil("Data Diri");
     } catch (error) {
       console.error("Gagal update profil:", error);
-      alert(error.response?.data?.message || "Gagal memperbarui profil");
+     Swal.fire({
+  icon: "error",
+  title: "Gagal",
+  text:
+    error.response?.data?.message ||
+    "Gagal memperbarui profil",
+  confirmButtonColor: "#ef4444",
+});
     }
   };
 
@@ -275,7 +288,12 @@ function Dashboard() {
   console.log("TOKEN:", localStorage.getItem("token"));
   try {
     if (passwordData.newPassword !== passwordData.confirmPassword) {
-      alert("Konfirmasi password tidak cocok");
+     Swal.fire({
+  icon: "warning",
+  title: "Password Tidak Cocok",
+  text: "Konfirmasi password harus sama dengan password baru",
+  confirmButtonColor: "#f97316",
+});
       return;
     }
 
@@ -285,7 +303,12 @@ function Dashboard() {
   konfirmasi_password: passwordData.confirmPassword,
 });
 
-    alert(response.data.message || "Password berhasil diubah");
+    Swal.fire({
+  icon: "success",
+  title: "Berhasil",
+  text: response.data.message || "Password berhasil diubah",
+  confirmButtonColor: "#22c55e",
+});
 
     setPasswordData({
       oldPassword: "",
@@ -294,10 +317,15 @@ function Dashboard() {
     });
 
   } catch (error) {
-    alert(
-      error.response?.data?.message ||
-      "Gagal mengubah password"
-    );
+    Swal.fire({
+  icon: "error",
+  title: "Gagal",
+  text:
+    error.response?.data?.message ||
+    "Gagal mengubah password",
+  confirmButtonColor: "#ef4444",
+});
+
   }
 };
 
@@ -309,34 +337,62 @@ function Dashboard() {
   };
 
   const submitPengajuan = async () => {
-    try {
-      const response = await axiosInstance.post(
-        "/pengajuan-kegiatan",
-        pengajuanData
-      );
+  try {
+    const response = await axiosInstance.post(
+      "/pengajuan-kegiatan",
+      pengajuanData
+    );
 
-      alert(response.data.message || "Pengajuan kegiatan berhasil dikirim");
+    Swal.fire({
+      icon: "success",
+      title: "Pengajuan Berhasil",
+      text:
+        response.data.message ||
+        "Pengajuan kegiatan berhasil dikirim",
+      confirmButtonColor: "#22c55e",
+    });
 
-      setShowPengajuan(false);
+    setShowPengajuan(false);
 
-      setPengajuanData({
-        nama: "",
-        kategori: "Seminar",
-        tanggal: "",
-        lokasi: "",
-        kuota: 50,
-      });
+    setPengajuanData({
+      nama: "",
+      kategori: "Seminar",
+      tanggal: "",
+      lokasi: "",
+      kuota: 50,
+    });
 
-    } catch (error) {
-      alert(error.response?.data?.message || "Gagal mengirim pengajuan");
+  } catch (error) {
+    Swal.fire({
+      icon: "error",
+      title: "Pengajuan Gagal",
+      text:
+        error.response?.data?.message ||
+        "Gagal mengirim pengajuan",
+      confirmButtonColor: "#ef4444",
+    });
+  }
+};
+
+ const handleLogout = () => {
+  Swal.fire({
+    title: "Logout?",
+    text: "Yakin ingin keluar dari sistem?",
+    icon: "question",
+    showCancelButton: true,
+    confirmButtonText: "Ya, Logout",
+    cancelButtonText: "Batal",
+    confirmButtonColor: "#ef4444",
+    cancelButtonColor: "#6b7280",
+  }).then((result) => {
+    if (result.isConfirmed) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+
+      navigate("/login");
     }
-  };
-
-  const handleLogout = () => {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    navigate("/login");
-  };
+  });
+};
 
   return (
     <div className="app">
