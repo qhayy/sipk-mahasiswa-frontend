@@ -43,7 +43,7 @@ const handleVerifikasi = async (id, status) => {
 
     alert(`Kegiatan berhasil ${status}`);
 
-    loadKegiatan();
+    fetchKegiatan();
 
   } catch (error) {
     console.error(error);
